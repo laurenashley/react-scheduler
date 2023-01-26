@@ -6,9 +6,12 @@
     @include button-inactive--opacity;
 
     margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
 
     &-image {
       border-radius: 16px;
+      margin-right: 5px;
     }
 
     &--selected {
