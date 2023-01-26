@@ -24,5 +24,3 @@ export default function DayListItem(props) {
     </li>
   );
 }
-
-export default DayListItem;
