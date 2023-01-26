@@ -3,7 +3,9 @@ import DayListItem from "./DayListItem";
 
 function DayList () {
   return (
-    <ul></ul>
+    <ul>
+      <DayListItem />
+    </ul>
   );
 }
 
