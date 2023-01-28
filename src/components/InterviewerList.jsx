@@ -4,6 +4,10 @@ import InterviewerListItem from "./InterviewerListItem";
 import "components/InterviewerList.scss";
 
 export default function InterviewerList(props) {
+  // remove this when hooked up to app
+  const value = props.name;
+  const onChange = props.setInterviewer;
+
   const interviewers = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem 
