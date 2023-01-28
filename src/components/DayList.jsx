@@ -11,7 +11,7 @@ function DayList (props) {
         name={day.name} 
         spots={day.spots}
         selected={selected}
-        setDay={props.setDay}  
+        setDay={() => {props.setDay(day.name)}}  
       />
     );
   });

@@ -67,7 +67,11 @@ storiesOf("DayList", module)
     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
   ))
   .add("Wednesday", () => (
-      <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
+      <DayList
+        days={days} 
+        day={"Wednesday"} 
+        setDay={() => action("setDay")(day.name)} 
+      />
   ));
 
 const interviewer = {
