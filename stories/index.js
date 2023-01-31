@@ -170,6 +170,7 @@ storiesOf("Appointment", module)
                         student=""
                         interviewer={interviewer}
                         interviewers={interviewers}
+                        onChange={action("setStudent")}
                         onSave={action("onSave")}
                         onCancel={action("onCancel")}
                        />)
