@@ -23,14 +23,14 @@ export default function Form(props) {
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off">
+        <form onSubmit={e => e.preventDefault()} autoComplete="off">
           <input
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
             placeholder="Enter Student Name"
             value={student}
-            onChange={(event) => setStudent(event.target.value)}
+            onChange={(e) => setStudent(e.target.value)}
           />
         </form>
         <InterviewerList 
