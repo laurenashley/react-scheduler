@@ -10,8 +10,12 @@ export default function useVisualMode(initial) {
   }
 
   function back() {
-    history.pop();
-    setMode(history[history.length - 1]);
+    console.log('hist lgth: ', initial, history.length, mode);
+    // return to initial mode if only one mode left in history
+    if (history.length >= 1) {
+      history.pop();
+      setMode(history[history.length - 1]);
+    } 
   }
 
   return { mode, transition, back };
