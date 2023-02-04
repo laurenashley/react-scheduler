@@ -4,7 +4,7 @@ import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
-  console.log('Form props: ', props);
+  console.log('Form props: ', props.interviewers.data);
   const [ student, setStudent ] = useState(props.student || "");
   const [ interviewer, setInterviewer ] = useState(props.interviewer || null);
 
@@ -35,7 +35,7 @@ export default function Form(props) {
         </form>
         <InterviewerList 
           value = {interviewer ? interviewer.id : null}
-          interviewers={props.interviewers}
+          interviewers={props.interviewers.data}
           setInterviewer={setInterviewer}  
         />
       </section>
