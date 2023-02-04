@@ -3,6 +3,7 @@ import React, {Fragment} from "react";
 import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
+import Form from "./Form";
 import Empty from "./Empty";
 import useVisualMode from "hooks/useVisualMode";
 
@@ -14,6 +15,8 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  console.log('appointment compnt props: ', props);
 
   return (
     <Fragment>
@@ -27,9 +30,10 @@ export default function Appointment(props) {
         />
       )}
       { mode === CREATE && (
-        <Show
+        <Form
           student="Name"
-          interviewer=""
+          interviewer={props.interview.interviewer}
+          interviewers={props.interviewers}
         />
       )}
       </article> 
