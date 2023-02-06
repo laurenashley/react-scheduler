@@ -35,7 +35,7 @@ export default function Form(props) {
         </form>
         <InterviewerList 
           value = {interviewer ? interviewer.id : null}
-          interviewers={props.interviewers.data}
+          interviewers={props.interviewers}
           setInterviewer={setInterviewer}  
         />
       </section>

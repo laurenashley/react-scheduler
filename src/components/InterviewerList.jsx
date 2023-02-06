@@ -6,7 +6,7 @@ import "components/InterviewerList.scss";
 export default function InterviewerList(props) {
   console.log('InterviewerList props: ', props.interviewers);
   // ERROR: props.interviewers.map is not a fn ???????? why
-  const interviewers = props.interviewers.map((interviewer) => {
+  const interviewersList = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem 
         key={interviewer.id}
@@ -23,7 +23,7 @@ export default function InterviewerList(props) {
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewers</h4>
       <ul className="interviewers__list">
-        {interviewers}
+        {interviewersList}
       </ul>
     </section>
   );
