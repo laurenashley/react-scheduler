@@ -21,7 +21,7 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  console.log('appointment compnt props: ', props);
+  // console.log('appointment compnt props: ', props);
 
   return (
     <Fragment>
@@ -39,7 +39,7 @@ export default function Appointment(props) {
       { mode === CREATE && (
         <Form
           student="Name"
-          interviewers={[]}
+          interviewers={props.interviewers}
           interviewer={1}
           onCancel={() => back()}
           onSave={() => transition(SAVING)}
