@@ -21,7 +21,20 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  // console.log('appointment compnt props: ', props);
+  function save(name, interviewer) {
+    console.log('Saving... ');
+    const interview = {
+      student: name,
+      interviewer
+    };
+    const appntID = '';
+    console.log('onSave: ', interview);
+    
+    // props.bookInterview(appntID, interview);
+  }
+
+  console.log('appointment compnt props: ', props);
+  const studentName = props.interview ? props.interview.student : '';
 
   return (
     <Fragment>
@@ -30,7 +43,7 @@ export default function Appointment(props) {
       { mode === EMPTY && <Empty onAdd={() => transition(CREATE)} /> }
       { mode === SHOW && (
         <Show
-          student={props.interview.student}
+          student={studentName}
           interviewer={props.interview.interviewer}
           onEdit={() => transition(EDIT)}
           onDelete={() => transition(CONFIRM)}
@@ -38,11 +51,11 @@ export default function Appointment(props) {
       )}
       { mode === CREATE && (
         <Form
-          student="Name"
+          student={studentName}
           interviewers={props.interviewers}
-          interviewer={1}
+          interviewer={props.interviewers[0]} // To Do 
           onCancel={() => back()}
-          onSave={() => transition(SAVING)}
+          onSave={save}
           onComplete={() => transition(SHOW)}
         />
       )}
