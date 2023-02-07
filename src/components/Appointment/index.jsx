@@ -29,10 +29,8 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    const appntID = '';
-    console.log('onSave: ', interview);
     
-    // props.bookInterview(appntID, interview);
+    props.bookInterview(props.id, interview);
   }
 
   console.log('appointment compnt props: ', props);

@@ -23,7 +23,7 @@ export default function Application(props) {
       console.log(id, interview);
     }
   
-    console.log('appntmnt state.ints: ', appointment, state.interviewers, getInterviewersForDay(state, state.day));
+    console.log('appntmnt state.ints: ', appointment);
 
     return (
       <Appointment
