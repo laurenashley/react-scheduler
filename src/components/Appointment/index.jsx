@@ -23,6 +23,8 @@ export default function Appointment(props) {
 
   function save(name, interviewer) {
     console.log('Saving... ');
+    //transition(SAVING);
+
     const interview = {
       student: name,
       interviewer
@@ -35,6 +37,9 @@ export default function Appointment(props) {
 
   console.log('appointment compnt props: ', props);
   const studentName = props.interview ? props.interview.student : '';
+  const interviewer = props.interview ? props.interview.interviewer : '';
+
+  console.log('appointment compnt props interviewer: ', interviewer);
 
   return (
     <Fragment>
@@ -44,7 +49,7 @@ export default function Appointment(props) {
       { mode === SHOW && (
         <Show
           student={studentName}
-          interviewer={props.interview.interviewer}
+          interviewer={interviewer.id}
           onEdit={() => transition(EDIT)}
           onDelete={() => transition(CONFIRM)}
         />
@@ -53,7 +58,7 @@ export default function Appointment(props) {
         <Form
           student={studentName}
           interviewers={props.interviewers}
-          interviewer={props.interviewers[0]} // To Do 
+          interviewer={interviewer}
           onCancel={() => back()}
           onSave={save}
           onComplete={() => transition(SHOW)}

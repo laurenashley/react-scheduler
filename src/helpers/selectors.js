@@ -25,13 +25,10 @@ export function getInterviewersForDay(state, day) {
   const interviewersArray = [];
 
   if (dayData) {
-    for (const appointmentID of dayData.appointments) {
-      const interview = state.appointments[appointmentID].interview;
-      if (interview) {
-        // Should intverviewer Obj be passed here or just ID?
-        const interviewerObj = state.interviewers[interview.interviewer]
-        interviewersArray.push(interviewerObj);
-      }
+    for (const intvrID of dayData.interviewers) {
+      const interviewerObj = state.interviewers[intvrID];
+      
+      interviewersArray.push(interviewerObj);
     }
   }
 

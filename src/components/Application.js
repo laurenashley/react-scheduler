@@ -16,14 +16,14 @@ export default function Application(props) {
   });
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
-  function bookInterview(id, interview) {
-    console.log(id, interview);
-  }
-
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+
+    function bookInterview(id, interview) {
+      console.log(id, interview);
+    }
   
-    // console.log('appntmnt state.ints: ', state.interviewers);
+    console.log('appntmnt state.ints: ', appointment, state.interviewers, getInterviewersForDay(state, state.day));
 
     return (
       <Appointment
