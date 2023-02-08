@@ -20,16 +20,22 @@ export default function Application(props) {
     const interview = getInterview(state, appointment.interview);
 
     function bookInterview(id, interview) {
-      console.log(id, interview);
+      console.log('bookIntervw: ', id, interview);
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
       };
+
+      console.log('bookIntervw appnt: ', appointment); // interview.interviewer is here
       const appointments = {
         ...state.appointments,
         [id]: appointment
       };
-      setState({...state, appointments});
+      console.log('bookIntervw appntS: ', appointments); // interview.interviewer is undefined here
+      setState({
+        ...state,
+        appointments
+      });
       // axios PUT request
 
     }

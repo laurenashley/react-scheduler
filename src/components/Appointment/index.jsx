@@ -22,7 +22,7 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
-    console.log('Saving... ');
+    console.log('Saving... intervwr ', interviewer);
     // transition(SAVING);
 
     const interview = {
@@ -30,11 +30,13 @@ export default function Appointment(props) {
       interviewer
     };
     
+    console.log('appointment props.id: ', props.id);
+
     props.bookInterview(props.id, interview);
-    // transition(SHOW);
+    transition(SHOW);
   }
 
-  // console.log('appointment compnt props: ', props);
+  console.log('appointment compnt props: ', props);
 
   return (
     <Fragment>
@@ -44,7 +46,7 @@ export default function Appointment(props) {
       { mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer.id}
+          interviewer={props.interview.interviewer}
           onEdit={() => transition(EDIT)}
           onDelete={() => transition(CONFIRM)}
         />
