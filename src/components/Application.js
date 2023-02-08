@@ -26,17 +26,19 @@ export default function Application(props) {
         interview: { ...interview }
       };
 
-      console.log('bookIntervw appnt: ', appointment); // interview.interviewer is here
+      console.log('bookIntervw appnt id: 1 ', appointment, state.appointments[1]); // interviewer in state is undefined here, good...
       const appointments = {
         ...state.appointments,
+        interview: {...state.appointments.interview},
         [id]: appointment
       };
-      console.log('bookIntervw appntS: ', appointments); // interview.interviewer is undefined here
+      console.log('bookIntervw appntS id: 1 ', appointments[1]); // interview.interviewer obj is def'd here, good...
       setState({
         ...state,
         appointments
       });
-      // axios PUT request
+      console.log('state after adding appointment id: 1 ', state.appointments[1]); // problem: interview obj is null here
+      // axios PUT request will go here
 
     }
   
