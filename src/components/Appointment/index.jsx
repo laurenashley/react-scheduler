@@ -22,21 +22,17 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
-    console.log('Saving... intervwr ', interviewer);
-    // transition(SAVING);
-
     const interview = {
       student: name,
       interviewer
     };
     
-    console.log('appointment props.id: ', props.id);
-
+    transition(SAVING);
     props.bookInterview(props.id, interview);
     transition(SHOW);
   }
 
-  console.log('appointment compnt props: ', props);
+  // console.log('appointment compnt props: ', props);
 
   return (
     <Fragment>

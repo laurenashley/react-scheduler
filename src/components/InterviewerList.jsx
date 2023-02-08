@@ -4,7 +4,6 @@ import InterviewerListItem from "./InterviewerListItem";
 import "components/InterviewerList.scss";
 
 export default function InterviewerList(props) {
-  console.log('InterviewerList props: ', props);
   const interviewersList = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem 
@@ -13,7 +12,7 @@ export default function InterviewerList(props) {
         selected={interviewer.id === props.value}
         name={interviewer.name}
         avatar={interviewer.avatar}
-        onChange={() => props.setInterviewer(interviewer)} // Form props not receiving interviewer obj
+        onChange={() => props.setInterviewer(interviewer.id)}
       />
     );
     
