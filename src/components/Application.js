@@ -21,9 +21,20 @@ export default function Application(props) {
 
     function bookInterview(id, interview) {
       console.log(id, interview);
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState({...state, appointments});
+      // axios PUT request
+
     }
   
-    console.log('appntmnt state.ints: ', appointment);
+    // console.log('appntmnt state.ints: ', appointment);
 
     return (
       <Appointment

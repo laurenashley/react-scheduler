@@ -23,7 +23,7 @@ export default function Appointment(props) {
 
   function save(name, interviewer) {
     console.log('Saving... ');
-    //transition(SAVING);
+    // transition(SAVING);
 
     const interview = {
       student: name,
@@ -31,9 +31,10 @@ export default function Appointment(props) {
     };
     
     props.bookInterview(props.id, interview);
+    // transition(SHOW);
   }
 
-  console.log('appointment compnt props: ', props);
+  // console.log('appointment compnt props: ', props);
 
   return (
     <Fragment>
