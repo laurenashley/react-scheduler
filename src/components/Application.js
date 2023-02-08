@@ -24,20 +24,27 @@ export default function Application(props) {
         ...state.appointments[id],
         interview: { ...interview }
       };
-
+      // Do I keep this after axios??
       const appointments = {
         ...state.appointments,
         interview: {...state.appointments.interview},
         [id]: appointment
       };
-      
+
+      // Do I keep this after axios??
       setState({
         ...state,
         appointments
       });
-      
-      // axios PUT request will go here
 
+      // Does this replace setState above??
+      axios.put(`/api/appointments/${id}`, appointment)
+        .then(res => {
+          console.log('res.body: ', res);
+          setState({ ...state, appointments })
+        })
+        .then(res => console.log('new res: ', res));
+        // .resolve(() => transition(SHOW)); <-- is this supposed to be here or in appointment component?...
     }
   
     // console.log('appntmnt state.ints: ', appointment);
