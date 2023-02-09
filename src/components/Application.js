@@ -19,7 +19,7 @@ export default function Application(props) {
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
-    const updateAppointments = (id, value) => {
+    const packAppointments = (id, value) => {
       const appointment = {
         ...state.appointments[id],
         interview: value ? { ...value } : null
@@ -28,40 +28,32 @@ export default function Application(props) {
         ...state.appointments,
         [id]: appointment
       };
-      // need to return appointment too
-      return appointments;
+      
+      return [ appointment, appointments ];
     };
 
-    // const updateAPI = (id, appointment) => { // Needs appointments too
-    //   axios.put(`/api/appointments/${id}`, appointment)
-    //   .then(() => {
-    //     // console.log('res.body: ', res);
-    //     setState({ ...state, appointments });
-    //   });
-    // };
+    const updateAPI = (id, appointment) => { // Needs appointments too
+      axios.put(`/api/appointments/${id}`, appointment)
+      .then(() => {
+        // console.log('res.body: ', res);
+        setState({ ...state, appointments });
+      });
+    };
 
     function bookInterview(id, interview) {
-      const appointments = updateAppointments(id, interview);
+      const [ appointment, appointments ] = packAppointments(id, interview);
 
       setState({ ...state, appointments });
 
-      axios.put(`/api/appointments/${id}`, appointment)
-        .then(() => {
-          // console.log('res.body: ', res);
-          setState({ ...state, appointments });
-        });
+      updateAPI(id, appointment, appointments);
     }
 
     function cancelInterview(id) {
-      const appointments = updateAppointments(id);
+      const [ appointment, appointments ] = packAppointments(id);
 
       setState({ ...state, appointments });
 
-      axios.put(`/api/appointments/${id}`, appointment)
-        .then(() => {
-          // console.log('res.body: ', res);
-          setState({ ...state, appointments });
-        });
+      updateAPI(id, appointment, appointments);
     }
   
     // console.log('appntmnt state.ints: ', appointment);
