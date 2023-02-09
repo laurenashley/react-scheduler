@@ -28,7 +28,7 @@ export default function Application(props) {
         ...state.appointments,
         [id]: appointment
       };
-
+      // need to return appointment too
       return appointments;
     };
 
