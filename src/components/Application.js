@@ -28,16 +28,7 @@ export default function Application(props) {
         ...state.appointments,
         [id]: appointment
       };
-      
       return [ appointment, appointments ];
-    };
-
-    const updateAPI = (id, appointment) => { // Needs appointments too
-      axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        // console.log('res.body: ', res);
-        setState({ ...state, appointments });
-      });
     };
 
     function bookInterview(id, interview) {
@@ -45,7 +36,13 @@ export default function Application(props) {
 
       setState({ ...state, appointments });
 
-      updateAPI(id, appointment, appointments);
+      return (
+        axios.put(`/api/appointments/${id}`, appointment)
+          .then((res) => {
+            console.log('res.body: ', res);
+            setState({ ...state, appointments });
+          })
+      );
     }
 
     function cancelInterview(id) {
@@ -53,7 +50,14 @@ export default function Application(props) {
 
       setState({ ...state, appointments });
 
-      updateAPI(id, appointment, appointments);
+    return (
+      axios.delete(`/api/appointments/${id}`)
+      .then((res) => {
+        console.log('res.body: ', res);
+        setState({ ...state, appointments });
+      })
+      .catch(err => console.log(err))
+    );
     }
   
     // console.log('appntmnt state.ints: ', appointment);
