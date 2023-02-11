@@ -21,6 +21,12 @@ export default function useApplicationData() {
     return [ appointment, appointments ];
   };
 
+  const updateSpots = (appointmentID, cancel) => {
+    // find day by appointmentID
+    const day = state.days.find(days => day.appointments === appointmentID);
+    console.log('updateSpots appointmentID, cancel: ', day, cancel);
+  };
+
   function bookInterview(id, interview) {
     const [ appointment, appointments ] = packAppointments(id, interview);
 
@@ -31,6 +37,7 @@ export default function useApplicationData() {
         .then((res) => {
           console.log('res.body: ', res);
           setState({ ...state, appointments });
+          updateSpots(id, false);
         })
     );
   }
@@ -45,6 +52,7 @@ export default function useApplicationData() {
       .then((res) => {
         console.log('res.body: ', res);
         setState({ ...state, appointments });
+        updateSpots(id, true);
       })
       .catch(err => console.log(err))
     );
