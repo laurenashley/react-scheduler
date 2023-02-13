@@ -11,7 +11,7 @@ export default function useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
-  const packAppointments = (id, value) => {
+  const packageState = (id, value) => {
     const appointment = {
       ...state.appointments[id],
       interview: value ? { ...value } : null
@@ -20,36 +20,32 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    return [ appointment, appointments ];
-  };
 
-  const updateSpots = (appointments) => {
-    // find day 
+    /**
+     * Days
+     */
     const day = state.days.find(day => day.name === state.day);
-    const dayID = day.id - 1;
-
-    // count appointments that have null interview
-    const spotsCount = state.days[dayID].appointments.reduce();
-    // iterate through state.appointments per state.days.appointments
-    // Count app's with null appointment
-
+    let spotsCount = 0;
+    
+    for (const apptID of day.appointments) {
+      if (appointments[apptID].interview === null) {
+        spotsCount++;
+      }
+    }
 
     const dayState = {
-      ...state.days[dayID]
-      // spots: cancel ? day.spots + 1 : day.spots - 1
+      ...state.days[day.id],
+      spots: spotsCount
     };
-    console.log('dayState: ', dayState);
-
     const days = [ ...state.days ];
-    days[dayID] = dayState;
+    days[day.id] = dayState;
     console.log('new Days state: ', days);
 
-    return days;
+    return [ appointment, appointments, days ];
   };
 
   function bookInterview(id, interview) {
-    const [ appointment, appointments ] = packAppointments(id, interview);
-    const days = updateSpots(appointments);
+    const [ appointment, appointments, days ] = packageState(id, interview);
 
     return (
       axios.put(`/api/appointments/${id}`, appointment)
@@ -61,8 +57,7 @@ export default function useApplicationData() {
   }
 
   function cancelInterview(id) {
-    const [ appointment, appointments ] = packAppointments(id);
-    const days = updateSpots(appointments);
+    const [ appointment, appointments, days ] = packageState(id);
 
     return (
       axios.delete(`/api/appointments/${id}`)
