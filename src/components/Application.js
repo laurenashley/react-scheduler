@@ -1,4 +1,4 @@
-import React, { useState, setState, useEffect } from "react";
+import React from "react";
 
 import "components/Application.scss";
 
