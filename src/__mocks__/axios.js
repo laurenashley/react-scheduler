@@ -1,6 +1,5 @@
-import React from "react";
-
 const fixtures = {
+  defaults: { baseURL: "" },
   days: [
     {
       id: 1,
