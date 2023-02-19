@@ -39,7 +39,6 @@ export default function useApplicationData() {
     };
     const days = [ ...state.days ];
     days[day.id] = dayState;
-    console.log('new Days state: ', days);
 
     return [ appointment, appointments, days ];
   };
@@ -50,7 +49,6 @@ export default function useApplicationData() {
     return (
       axios.put(`/api/appointments/${id}`, appointment)
         .then((res) => {
-          console.log('res.body: ', res);
           setState({ ...state, appointments, days });
         })
     );
@@ -62,7 +60,6 @@ export default function useApplicationData() {
     return (
       axios.delete(`/api/appointments/${id}`)
       .then((res) => {
-        console.log('res.body: ', res);
         setState({ ...state, appointments, days });
       })
       .catch(err => console.log(err))
@@ -76,8 +73,6 @@ export default function useApplicationData() {
       axios.get('/api/interviewers')
     ])
       .then(all => {
-        console.log('Days Data: ', all[0]);
-        console.log('Appointments Data: ', all[1]);
         setState(prev => ({...prev, 
           days: all[0].data, 
           appointments: all[1].data,
