@@ -34,32 +34,32 @@ export default function useApplicationData() {
     }
 
     const dayState = {
-      ...state.days[day.id],
+      ...state.days[day.id - 1],
       spots: spotsCount
     };
     const days = [ ...state.days ];
-    days[day.id] = dayState;
+    days[day.id - 1] = dayState;
 
     return [ appointment, appointments, days ];
   };
 
   function bookInterview(id, interview) {
-    const [ appointment, appointments, days ] = packageState(id, interview);
+    const [ appointment ] = packageState(id, interview);
 
     return (
       axios.put(`/api/appointments/${id}`, appointment)
         .then((res) => {
+          const [ appointment, appointments, days ] = packageState(id, interview);
           setState({ ...state, appointments, days });
         })
     );
   }
 
   function cancelInterview(id) {
-    const [ appointment, appointments, days ] = packageState(id);
-
     return (
       axios.delete(`/api/appointments/${id}`)
       .then((res) => {
+        const [ appointment, appointments, days ] = packageState(id);
         setState({ ...state, appointments, days });
       })
       .catch(err => console.log(err))

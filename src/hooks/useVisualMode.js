@@ -5,7 +5,6 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
   
   function transition(newMode, replace=false) {
-    // replace last mode with new mode
     if (replace) {
       history.pop();
     }

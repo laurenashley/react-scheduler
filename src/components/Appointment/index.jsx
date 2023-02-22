@@ -44,8 +44,6 @@ export default function Appointment(props) {
     .catch(() => transition(ERROR_DELETE, true));
   }
 
-  // console.log('appointment compnt props: ', props, {mode});
-
   return (
     <Fragment>
       <Header time={props.time} />
