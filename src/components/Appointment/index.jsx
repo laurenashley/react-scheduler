@@ -44,12 +44,12 @@ export default function Appointment(props) {
     .catch(() => transition(ERROR_DELETE, true));
   }
 
-  // console.log('appointment compnt props: ', props);
+  // console.log('appointment compnt props: ', props, {mode});
 
   return (
     <Fragment>
       <Header time={props.time} />
-      <article className="appointment">
+      <article className="appointment" data-testid="appointment">
       { mode === EMPTY && <Empty onAdd={() => transition(CREATE)} /> }
       { mode === SHOW && (
         <Show
