@@ -62,7 +62,7 @@ export default function useApplicationData() {
         const [ appointment, appointments, days ] = packageState(id);
         setState({ ...state, appointments, days });
       })
-      .catch(err => console.log(err))
+      // .catch(err => console.log(err))
     );
   }
 
