@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import {
   render,
@@ -12,7 +13,8 @@ import {
   getByPlaceholderText,
   queryByText,
   getAllByAltText,
-  queryByAltText
+  queryByAltText,
+  getByTestId
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -31,7 +33,7 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, /Archie Cohen/i));
 
@@ -55,7 +57,7 @@ describe("Application", () => {
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
 
-  it.only("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // 1. Render the Application.
     const { container } = render(<Application />);
   
@@ -80,19 +82,64 @@ describe("Application", () => {
     expect(getByText(appointment, "Deleting")).toBeInTheDocument();
 
     // 7. Wait until the element with the "Add" button is displayed.
-    // const emptyApnt = getAllByTestId(container, "appointment")[0];
     await waitForElement(() => getByAltText(appointment, "Add"));
 
-    // 8. Check that the DayListItem with the text "Monday" also has the text "2 spot remaining".
+    // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
-  // it("loads data, edits an interview and keeps the spots remaining for Monday the same");
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // 1. Render the Application.
+    const { container } = render(<Application />);
 
-  // it("shows the save error when failing to save an appointment");
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // 3. Click the "Edit" button on the first show appointment.
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+
+    // 4. Check that the student's name is the value in the input.
+    expect(getByTestId(appointment, "student-name-input")).toHaveValue("Archie Cohen");
+
+    // 5. Change value of student's name.
+    fireEvent.change(getByTestId(appointment, "student-name-input"), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
+    // 6. Click Save button
+    fireEvent.click(getByText(appointment, "Save"));
+
+    // 7. Check that the element with the text "Saving" is displayed.
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+    // 8. Wait until the element with the Stduent name is displayed.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
+    // 9. Check that the DayListItem with the text "Monday" also has the text "1 spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+  });
+
+  it("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+    const { container } = render(<Application />);
+
+    await waitForElement(() => getByText(container, /Archie Cohen/i));
+
+    const appointment = getAllByTestId(container, "appointment")[0];
+
+    fireEvent.click(getByAltText(appointment, "Add"));
+    fireEvent.click(getByText(appointment, "Save"));
+
+    expect(getByText(appointment, /Error saving this appointment/i)).toBeInTheDocument();
+  });
 
   // it("shows the delete error when failing to delete an existing appointment");
 });
