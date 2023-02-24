@@ -7,34 +7,45 @@ describe("Appointment", () => {
     cy.contains("Monday");
   });
 
-  // it("should book an interview", () => {
-  //   cy.get("[alt=Add]")
-  //     .first()
-  //     .click();
+  it("should book an interview", () => {
+    // 2. Clicks the add button for the first available appointment
+    cy.get("[alt=Add]")
+      .first()
+      .click();
   
-  //   cy.get("[data-testid=student-name-input]").type("Lydia Miller-Jones");
-  //   cy.get("[alt='Sylvia Palmer']").click();
+    // 3. Types name into input
+    cy.get("[data-testid=student-name-input]").type("Lydia Miller-Jones");
 
-  //   cy.contains("Save").click();
+    // 4. Selects interviewer
+    cy.get("[alt='Sylvia Palmer']").click();
 
-  //   cy.contains(".appointment__card--show", "Lydia Miller-Jones");
-  //   cy.contains(".appointment__card--show", "Sylvia Palmer");
-  // });
+    // 5. Clicks save button
+    cy.contains("Save").click();
 
-  // it("should edit an interview", () => {
-  // cy.get("[alt=Edit]")
-  //   .first()
-  //   .click({ force: true });
+    // 6. Asserts interview displays with correct student and interviewer
+    cy.contains(".appointment__card--show", "Lydia Miller-Jones");
+    cy.contains(".appointment__card--show", "Sylvia Palmer");
+  });
 
-  //   cy.get("[alt='Tori Malcolm']").click();
+  it("should edit an interview", () => {
+    // 2. Clicks the edit button for the first existing appointment
+    cy.get("[alt=Edit]")
+      .first()
+      .click({ force: true });
 
-  //   cy.get("[data-testid=student-name-input]").clear().type("Lydia Miller-Jones");
+    // 4. Selects interviewer
+    cy.get("[alt='Tori Malcolm']").click();
 
-  //   cy.contains("Save").click();
+    // 4. Clears value and types new student name
+    cy.get("[data-testid=student-name-input]").clear().type("Lydia Miller-Jones");
 
-  //   cy.contains(".appointment__card--show", "Lydia Miller-Jones");
-  //   cy.contains(".appointment__card--show", "Tori Malcolm");
-  // });
+    // 5. Clicks save button
+    cy.contains("Save").click();
+
+    // 6. Asserts new names are displayed on element
+    cy.contains(".appointment__card--show", "Lydia Miller-Jones");
+    cy.contains(".appointment__card--show", "Tori Malcolm");
+  });
 
   it("should cancel an interview", () => {
     // 2. Clicks the delete button for the existing appointment
