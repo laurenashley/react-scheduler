@@ -128,22 +128,31 @@ describe("Application", () => {
   });
 
   it("shows the save error when failing to save an appointment", async () => {
+    // Mock error with mocked axios put
     axios.put.mockRejectedValueOnce();
+
+    // 1. Render the Application.
     const { container} = render(<Application />);
-
+  
+    // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, /Archie Cohen/i));
-
+  
+    // 3. Click on Add button
     const appointment = getAllByTestId(container, "appointment")[0];
-
     fireEvent.click(getByAltText(appointment, "Add"));
-
+  
+    // 4. Type student name in the input
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
+  
+    // 4. Select interviewer
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
-
+  
+    // 4. Click save button
     fireEvent.click(getByText(appointment, "Save"));
-
+  
+    // 4. Wait for error element, then assert error messaging is present
     await waitForElement(() => getByText(appointment, "Error saving this appointment"))
           .then(() => {
             expect(getByText(appointment, "Error saving this appointment")).toBeInTheDocument();
@@ -152,6 +161,7 @@ describe("Application", () => {
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
+    // Mock error with mocked axios delete 
     axios.delete.mockRejectedValueOnce();
 
     // 1. Render the Application.
