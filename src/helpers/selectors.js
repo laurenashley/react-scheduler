@@ -27,7 +27,6 @@ export function getInterviewersForDay(state, day) {
   if (dayData) {
     for (const intvrID of dayData.interviewers) {
       const interviewerObj = state.interviewers[intvrID];
-      
       interviewersArray.push(interviewerObj);
     }
   }

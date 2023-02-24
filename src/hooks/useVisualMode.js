@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
-  const [mode, setMode] = useState(initial);
-  const [history, setHistory] = useState([initial]);
+  const [ mode, setMode ] = useState(initial);
+  const [ history ] = useState([initial]);
   
   function transition(newMode, replace=false) {
     if (replace) {
+      // Remove last mode to replace it in the case of status mode
       history.pop();
     }
     setMode(newMode);

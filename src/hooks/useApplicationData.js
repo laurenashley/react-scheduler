@@ -12,6 +12,7 @@ export default function useApplicationData() {
   const setDay = day => setState({ ...state, day });
 
   const packageState = (id, value) => {
+    /** Appointments **/
     const appointment = {
       ...state.appointments[id],
       interview: value ? { ...value } : null
@@ -21,9 +22,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    /**
-     * Days
-     */
+    /** Days **/
     const day = state.days.find(day => day.name === state.day);
     let spotsCount = 0;
     
