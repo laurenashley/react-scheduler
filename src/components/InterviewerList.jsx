@@ -16,7 +16,6 @@ export default function InterviewerList(props) {
         onChange={() => props.setInterviewer(interviewer.id)}
       />
     );
-    
   });
 
   return (
