@@ -11,26 +11,30 @@ export default function useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
-  const packageState = (id, value) => {
-    /** Appointments **/
-    const appointment = {
-      ...state.appointments[id],
-      interview: value ? { ...value } : null
-    };
+  const newAppointmenstState = (id, appointment) => {
+    /** Copy appointments from state and update with appointment */
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+    return appointments;
+  };
 
-    /** Days **/
-    const day = state.days.find(day => day.name === state.day);
-    let spotsCount = 0;
+  const countSpots = (day, appointments) => {
+    let count = 0;
     
+    /** Iterate through appointments, count the ones with null interview */
     for (const apptID of day.appointments) {
       if (appointments[apptID].interview === null) {
-        spotsCount++;
+        count++;
       }
     }
+    return count;
+  };
+
+  const newDaysState = (appointments) => {
+    const day = state.days.find(day => day.name === state.day);
+    const spotsCount = countSpots(day, appointments);
 
     const dayState = {
       ...state.days[day.id - 1],
@@ -39,26 +43,40 @@ export default function useApplicationData() {
     const days = [ ...state.days ];
     days[day.id - 1] = dayState;
 
-    return [ appointment, appointments, days ];
+    return days;
   };
 
   function bookInterview(id, interview) {
-    const [ appointment ] = packageState(id, interview);
+    /** Copy appointment from state and add interview to it **/
+    const appointment = {
+      ...state.appointments[id],
+      interview: interview ? { ...interview } : null
+    };
 
     return (
       axios.put(`/api/appointments/${id}`, appointment)
         .then((res) => {
-          const [ appointment, appointments, days ] = packageState(id, interview);
+          /** Copy appointments from state and update with appointment */
+          const appointments = newAppointmenstState(id, appointment);
+          const days = newDaysState(appointments);
           setState({ ...state, appointments, days });
         })
     );
   }
 
   function cancelInterview(id) {
+    /** Copy appointment from state, remove interview **/
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
     return (
       axios.delete(`/api/appointments/${id}`)
       .then((res) => {
-        const [ appointment, appointments, days ] = packageState(id);
+        /** Copy appointments from state and update with appointment */
+        const appointments = newAppointmenstState(id, appointment);
+        const days = newDaysState(appointments);
         setState({ ...state, appointments, days });
       })
     );
