@@ -22,7 +22,6 @@ export default function useApplicationData() {
 
   const countSpots = (day, appointments) => {
     let count = 0;
-    
     /** Iterate through appointments, count the ones with null interview */
     for (const apptID of day.appointments) {
       if (appointments[apptID].interview === null) {

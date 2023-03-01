@@ -2,12 +2,17 @@ import { useState } from "react";
 
 export default function useVisualMode(initial) {
   const [ mode, setMode ] = useState(initial);
-  const [ history ] = useState([initial]);
+  const [ history, setHistory ] = useState([initial]);
+
+  function removeLastModeInHistory() {
+    // Remove last mode as setup to replace it 
+    const newHistory = [...history].pop();
+    setHistory(newHistory);
+  }
   
   function transition(newMode, replace=false) {
     if (replace) {
-      // Remove last mode to replace it in the case of status mode
-      history.pop();
+      removeLastModeInHistory();
     }
     setMode(newMode);
     history.push(newMode);
@@ -15,7 +20,7 @@ export default function useVisualMode(initial) {
 
   function back() {
     if (history.length >= 1) {
-      history.pop();
+      removeLastModeInHistory();
       setMode(history[history.length - 1]);
     } 
     
