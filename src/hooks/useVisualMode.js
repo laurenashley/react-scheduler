@@ -5,14 +5,15 @@ export default function useVisualMode(initial) {
   
   function transition(newMode, replace=false, back=false) {
     setHistory(prev => {
-      const copy = [...prev];
+      const prevCopy = [...prev];
 
       /** removes last mode in history with current mode */
       /** ie. for modes coming after Saving or Deleting */
-      if (replace) copy.pop();
-      if (!back) copy.push(newMode);
+      if (replace) prevCopy.pop();
+      /** add curr mode to state only if not going back */
+      if (!back)   prevCopy.push(newMode);
 
-      return copy;
+      return prevCopy;
     });
   }
 
