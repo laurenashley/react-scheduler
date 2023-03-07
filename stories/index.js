@@ -111,7 +111,7 @@ storiesOf("InterviewerListItem", module)
     <InterviewerListItem
       name={interviewer.name}
       avatar={interviewer.avatar}
-      setInterviewer={() => action("setInterviewer")(interviewer.id)}
+      onChange={() => action("setInterviewer")(interviewer.id)}
     />
   ));
 
@@ -141,7 +141,7 @@ storiesOf("InterviewerList", module)
   .add("Clickable", () => (
     <InterviewerList
       interviewers={interviewers}
-      onChange={action("setInterviewer")}
+      setInterviewer={() => action("setInterviewer")(interviewer.id)}
     />
   ));
 
@@ -165,7 +165,10 @@ storiesOf("Appointment", module)
                           onCancel={action("onCancel")}
                         />)
   .add("Status", () => <Status message="Deleting" />)
-  .add("Error", () => <Error message="Could not delete appointment." />)
+  .add("Error", () => <Error 
+                        message="Could not delete appointment."
+                        onClose={action("onClose")}
+                      />)
   .add("Create", () => <Form 
                         interviewers={interviewers}
                         onChange={action("setStudent")}
@@ -174,8 +177,8 @@ storiesOf("Appointment", module)
                        />)
   .add("Edit", () => <Form 
                       student="Lydia Miller-Jones"
+                      interviewer={interviewers[0].id}
                       interviewers={interviewers}
-                      interviewer={interviewers[3]}
                       onSave={action("onSave")}
                       onCancel={action("onCancel")}
                      />)

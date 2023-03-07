@@ -3,7 +3,7 @@ import DayListItem from "./DayListItem";
 
 function DayList (props) {
   const days = props.days.map(day => {
-    const selected = (day.name === props.day);
+    const selected = (day.name === props.value);
 
     return (
       <DayListItem 
