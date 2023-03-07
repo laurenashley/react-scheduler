@@ -44,10 +44,6 @@ export default function Appointment(props) {
     .catch(() => transition(ERROR_DELETE, true));
   }
 
-  function close() {
-    transition(EMPTY, true);
-  }
-
   return (
     <Fragment>
       <Header time={props.time} />
@@ -96,13 +92,13 @@ export default function Appointment(props) {
       { mode === ERROR_SAVE && (
         <Error 
           message="Error saving this appointment"
-          onClose={() => close()}
+          onClose={() => transition(EMPTY, true)}
         />
       )}
       { mode === ERROR_DELETE && (
         <Error 
         message="Error deleting this appointment"
-        onClose={() => close()}
+        onClose={() => transition(EMPTY, true)}
         />
       )}
       </article> 
