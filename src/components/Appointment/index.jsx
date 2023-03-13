@@ -97,8 +97,8 @@ export default function Appointment(props) {
       )}
       { mode === ERROR_DELETE && (
         <Error 
-        message="Error deleting this appointment"
-        onClose={back}
+          message="Error deleting this appointment"
+          onClose={back}
         />
       )}
       </article> 
